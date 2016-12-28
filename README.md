@@ -48,8 +48,8 @@ $ npm run build
 
 - CSS Sticky footer
 
-	答：...
+	答：[CSS秘密花园： Sticky footers](http://www.w3cplus.com/css3/css-secrets/sticky-footers.html)
 
 - Flex布局
 
-	答：...
+	答：.

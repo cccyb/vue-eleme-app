@@ -1,5 +1,6 @@
 # Vue高仿饿了么APP
 > 使用vue@1.0开发的高仿饿了么APP（用户端）
+> [Vue.js高仿饿了么外卖App 2016最火前端框架](http://coding.imooc.com/class/74.html)
 
 ## 主要依赖
 - 基于vue@1.0

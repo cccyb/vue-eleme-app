@@ -7,24 +7,20 @@ var app = express();
 
 var router = express.Router();
 
-
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   req.url = '/index.html';
   next();
 });
 
 app.use(router);
 
-// 从data.json 中获取mock的假数据
 var appData = require('./data.json');
-var seller = appData.seller; // 商家信息
-var goods = appData.goods; // 商品信息
-var ratings = appData.ratings; // 评论信息
+var seller = appData.seller;
+var goods = appData.goods;
+var ratings = appData.ratings;
 
-//  定义获取数据的接口
 var apiRoutes = express.Router();
 
-// 商家信息接口
 apiRoutes.get('/seller', function (req, res) {
   res.json({
     errno: 0,
@@ -32,7 +28,6 @@ apiRoutes.get('/seller', function (req, res) {
   });
 });
 
-// 商品信息接口
 apiRoutes.get('/goods', function (req, res) {
   res.json({
     errno: 0,
@@ -40,7 +35,6 @@ apiRoutes.get('/goods', function (req, res) {
   });
 });
 
-// 评论信息接口
 apiRoutes.get('/ratings', function (req, res) {
   res.json({
     errno: 0,
@@ -50,10 +44,12 @@ apiRoutes.get('/ratings', function (req, res) {
 
 app.use('/api', apiRoutes);
 
+app.use(express.static('./dist'));
+
 module.exports = app.listen(port, function (err) {
   if (err) {
     console.log(err);
-    return;
+    return
   }
-  console.log('Listening at http://localhost:' + port + '\n');
+  console.log('Listening at http://localhost:' + port + '\n')
 });

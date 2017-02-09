@@ -1,5 +1,5 @@
 <template>
-  <div class="seller" v-el:seller>
+  <div class="seller" ref="seller">
     <div class="seller-content">
       <div class="overview">
         <h1 class="title">{{seller.name}}</h1>
@@ -40,17 +40,17 @@
           <p class="content">{{seller.bulletin}}</p>
         </div>
         <ul v-if="seller.supports" class="supports">
-          <li class="support-item border-1px" v-for="item in seller.supports">
-            <span class="icon" :class="classMap[seller.supports[$index].type]"></span>
-            <span class="text">{{seller.supports[$index].description}}</span>
+          <li class="support-item border-1px" v-for="(item,index) in seller.supports">
+            <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+            <span class="text">{{seller.supports[index].description}}</span>
           </li>
         </ul>
       </div>
       <split></split>
       <div class="pics">
         <h1 class="title">商家实景</h1>
-        <div class="pic-wrapper" v-el:pic-wrapper>
-          <ul class="pic-list" v-el:pic-list>
+        <div class="pic-wrapper" ref="picWrapper">
+          <ul class="pic-list" ref="picList">
             <li class="pic-item" v-for="pic in seller.pics">
               <img :src="pic" width="120" height="90">
             </li>
@@ -70,7 +70,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
-  import {saveToLocal, loadFromLocal} from '../../common/js/store.js';
+  import {saveToLocal, loadFromLocal} from 'common/js/store';
   import star from 'components/star/star';
   import split from 'components/split/split';
 
@@ -97,13 +97,17 @@
     },
     watch: {
       'seller'() {
-        this._initScroll();
-        this._initPics();
+        this.$nextTick(() => {
+          this._initScroll();
+          this._initPics();
+        });
       }
     },
-    ready() {
-      this._initScroll();
-      this._initPics();
+    mounted() {
+      this.$nextTick(() => {
+        this._initScroll();
+        this._initPics();
+      });
     },
     methods: {
       toggleFavorite(event) {
@@ -115,8 +119,8 @@
       },
       _initScroll() {
         if (!this.scroll) {
-          this.scroll = new BScroll(this.$els.seller, {
-          click: true
+          this.scroll = new BScroll(this.$refs.seller, {
+            click: true
           });
         } else {
           this.scroll.refresh();
@@ -127,10 +131,10 @@
           let picWidth = 120;
           let margin = 6;
           let width = (picWidth + margin) * this.seller.pics.length - margin;
-          this.$els.picList.style.width = width + 'px';
+          this.$refs.picList.style.width = width + 'px';
           this.$nextTick(() => {
             if (!this.picScroll) {
-              this.picScroll = new BScroll(this.$els.picWrapper, {
+              this.picScroll = new BScroll(this.$refs.picWrapper, {
                 scrollX: true,
                 eventPassthrough: 'vertical'
               });
@@ -149,7 +153,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl";
+  @import "../../common/stylus/mixin.styl"
 
   .seller
     position: absolute
@@ -168,11 +172,11 @@
         font-size: 14px
       .desc
         padding-bottom: 18px
-        border-1px(rgba(7, 17, 27, .1))
+        border-1px(rgba(7, 17, 27, 0.1))
         font-size: 0
         .star
-          margin-right: 8px
           display: inline-block
+          margin-right: 8px
           vertical-align: top
         .text
           display: inline-block
@@ -187,7 +191,7 @@
         .block
           flex: 1
           text-align: center
-          boder-right: 1px solid rgba(7, 17, 27, .1)
+          border-right: 1px solid rgba(7, 17, 27, 0.1)
           &:last-child
             border: none
           h2
@@ -210,8 +214,8 @@
         .icon-favorite
           display: block
           margin-bottom: 4px
-          font-size: 24px
           line-height: 24px
+          font-size: 24px
           color: #d4d6d9
           &.active
             color: rgb(240, 20, 20)
@@ -228,7 +232,7 @@
         font-size: 14px
       .content-wrapper
         padding: 0 12px 16px 12px
-        border-1px(rgba(7, 17, 27, .1))
+        border-1px(rgba(7, 17, 27, 0.1))
         .content
           line-height: 24px
           font-size: 12px
@@ -236,7 +240,7 @@
       .supports
         .support-item
           padding: 16px 12px
-          border-1px(rgba(7, 17, 27, .1))
+          border-1px(rgba(7, 17, 27, 0.1))
           font-size: 0
           &:last-child
             border-none()
@@ -246,7 +250,7 @@
           height: 16px
           vertical-align: top
           margin-right: 6px
-          background-size: 16px
+          background-size: 16px 16px
           background-repeat: no-repeat
           &.decrease
             bg-image('decrease_4')
@@ -288,12 +292,12 @@
       .title
         padding-bottom: 12px
         line-height: 14px
-        border-1px(rgba(7, 17, 27, .1))
+        border-1px(rgba(7, 17, 27, 0.1))
         font-size: 14px
       .info-item
         padding: 16px 12px
         line-height: 16px
-        border-1px(rgba(7, 17, 27, .1))
+        border-1px(rgba(7, 17, 27, 0.1))
         font-size: 12px
         &:last-child
           border-none()

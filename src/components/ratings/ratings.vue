@@ -1,5 +1,5 @@
 <template>
-  <div class="ratings" v-el:ratings>
+  <div class="ratings" ref="ratings">
     <div class="ratings-content">
       <div class="overview">
         <div class="overview-left">
@@ -25,10 +25,11 @@
         </div>
       </div>
       <split></split>
-      <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="ratings"></ratingselect>
+      <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent"
+                    :ratings="ratings"></ratingselect>
       <div class="rating-wrapper">
         <ul>
-          <li v-for="rating in ratings" v-show="needShow(rating.rateType,rating.text)" class="rating-item">
+          <li v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)" class="rating-item">
             <div class="avatar">
               <img width="28" height="28" :src="rating.avatar">
             </div>
@@ -78,12 +79,12 @@
       };
     },
     created() {
-      this.$http.get('api/ratings').then((response) => {
+      this.$http.get('/api/ratings').then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {
           this.ratings = response.data;
           this.$nextTick(() => {
-            this.scroll = new BScroll(this.$els.ratings, {
+            this.scroll = new BScroll(this.$refs.ratings, {
               click: true
             });
           });
@@ -100,17 +101,15 @@
         } else {
           return type === this.selectType;
         }
-      }
-    },
-    events: {
-      'ratingtype.select'(type) {
+      },
+      selectRating(type) {
         this.selectType = type;
         this.$nextTick(() => {
           this.scroll.refresh();
         });
       },
-      'content.toggle'(onlyContent) {
-        this.onlyContent = onlyContent;
+      toggleContent() {
+        this.onlyContent = !this.onlyContent;
         this.$nextTick(() => {
           this.scroll.refresh();
         });
@@ -124,14 +123,14 @@
     },
     components: {
       star,
-      ratingselect,
-      split
+      split,
+      ratingselect
     }
   };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl";
+  @import "../../common/stylus/mixin.styl"
 
   .ratings
     position: absolute
@@ -145,9 +144,9 @@
       padding: 18px 0
       .overview-left
         flex: 0 0 137px
-        margin: 6px 0
+        padding: 6px 0
         width: 137px
-        border-right: 1px solid rgba(7, 17, 27, .1)
+        border-right: 1px solid rgba(7, 17, 27, 0.1)
         text-align: center
         @media only screen and (max-width: 320px)
           flex: 0 0 120px
@@ -182,8 +181,8 @@
             color: rgb(7, 17, 27)
           .star
             display: inline-block
-            vertical-align: top
             margin: 0 12px
+            vertical-align: top
           .score
             display: inline-block
             line-height: 18px
@@ -205,59 +204,59 @@
       .rating-item
         display: flex
         padding: 18px 0
-        border-1px(rgba(7, 17, 27, .1))
-      .avatar
-        flex: 0 0 28px
-        width: 28px
-        margin-right: 12px
-        img
-          border-radius: 50%
-      .content
-        position: relative
-        flex: 1
-        .name
-          margin-bottom: 4px
-          line-height: 12px
-          font-size: 10px
-          color: rgb(7, 17, 27)
-        .star-wrapper
-          margin-bottom: 6px
-          font-size: 0
-          .star
-            display: inline-block
-            vertical-align: top
-            margin-right: 6px
-          .delivery
-            display: inline-block
-            vertical-align: top
+        border-1px(rgba(7, 17, 27, 0.1))
+        .avatar
+          flex: 0 0 28px
+          width: 28px
+          margin-right: 12px
+          img
+            border-radius: 50%
+        .content
+          position: relative
+          flex: 1
+          .name
+            margin-bottom: 4px
+            line-height: 12px
+            font-size: 10px
+            color: rgb(7, 17, 27)
+          .star-wrapper
+            margin-bottom: 6px
+            font-size: 0
+            .star
+              display: inline-block
+              margin-right: 6px
+              vertical-align: top
+            .delivery
+              display: inline-block
+              vertical-align: top
+              line-height: 12px
+              font-size: 10px
+              color: rgb(147, 153, 159)
+          .text
+            margin-bottom: 8px
+            line-height: 18px
+            color: rgb(7, 17, 27)
+            font-size: 12px
+          .recommend
+            line-height: 16px
+            font-size: 0
+            .icon-thumb_up, .item
+              display: inline-block
+              margin: 0 8px 4px 0
+              font-size: 9px
+            .icon-thumb_up
+              color: rgb(0, 160, 220)
+            .item
+              padding: 0 6px
+              border: 1px solid rgba(7, 17, 27, 0.1)
+              border-radius: 1px
+              color: rgb(147, 153, 159)
+              background: #fff
+          .time
+            position: absolute
+            top: 0
+            right: 0
             line-height: 12px
             font-size: 10px
             color: rgb(147, 153, 159)
-        .text
-          margin-bottom: 8px
-          line-height: 18px
-          color: rgb(7, 17, 27)
-          font-size: 12px
-        .recommend
-          line-height: 16px
-          font-size: 0
-          .icon-thumb_up, .item
-            display: inline-block
-            margin: 0 8px 4px 0
-            font-size: 9px
-          .icon-thumb_up
-            color: rgb(0, 160, 220)
-          .item
-            padding: 0 6px
-            border: 1px solid rgba(7, 17, 27, .1)
-            border-radius: 1px
-            color: rgb(147, 153, 159)
-            background: #fff
-        .time
-          position: absolute
-          top: 0
-          right: 0
-          line-height: 12px
-          font-size: 10px
-          color: rgb(147, 153, 159)
 </style>

@@ -1,7 +1,7 @@
 /**
  * 解析url参数
  * @example ?id=12345&a=b
- * @return Object {id:1,a:b}
+ * @return Object {id:12345,a:b}
  */
 export function urlParse() {
   let url = window.location.search;

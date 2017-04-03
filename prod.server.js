@@ -14,33 +14,23 @@ router.get('/', function (req, res, next) {
 
 app.use(router);
 
-var appData = require('./data.json');
-var seller = appData.seller;
-var goods = appData.goods;
-var ratings = appData.ratings;
+var seller = require('./static/seller.json');
+var goods = require('./static/goods.json');
+var ratings = require('./static/ratings.json');
 
 var apiRoutes = express.Router();
 
 apiRoutes.get('/seller', function (req, res) {
-	res.json({
-		errno: 0,
-		data: seller
-	});
+  res.json(seller);
 });
 
 apiRoutes.get('/goods', function (req, res) {
-	res.json({
-		errno: 0,
-		data: goods
-	});
+  res.json(goods);
 });
 
 apiRoutes.get('/ratings', function (req, res) {
-	res.json({
-		errno: 0,
-		data: ratings
-	});
-}); 
+  res.json(ratings);
+});
 
 app.use('/api', apiRoutes);
 
@@ -49,7 +39,7 @@ app.use(express.static('./dist'));
 module.exports = app.listen(port, function (err) {
 	if (err) {
 		console.log(err);
-		return
+		return;
 	}
-	console.log('Listening at http://localhost:' + port + '\n')
+	console.log('Listening at http://localhost:' + port + '\n');
 });

@@ -16,32 +16,22 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 
-var appData = require('../data.json')
-var seller = appData.seller
-var goods = appData.goods
-var ratings = appData.ratings
+var seller = require('../static/seller.json')
+var goods = require('../static/goods.json')
+var ratings = require('../static/ratings.json')
 
 var apiRoutes = express.Router()
 
 apiRoutes.get('/seller', function (req, res) {
-  res.json({
-    errno: 0,
-    data: seller
-  });
+  res.json(seller);
 })
 
 apiRoutes.get('/goods', function (req, res) {
-  res.json({
-    errno: 0,
-    data: goods
-  })
+  res.json(goods);
 })
 
 apiRoutes.get('/ratings', function (req, res) {
-  res.json({
-    errno: 0,
-    data: ratings
-  });
+  res.json(ratings);
 })
 
 app.use('/api', apiRoutes)

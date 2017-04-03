@@ -39,13 +39,17 @@ $ npm run build
 
 	答：因为"#"在zsh中是特殊字符，所以需要在webpack#1.0外加双引号，即使用`vue init "webpack#1.0" <project-name>`。
 - Stylus中文文档
+
 	答：http://www.zhangxinxu.com/jq/stylus/
 - es6入门学习
+
 	答：http://es6.ruanyifeng.com/
 
 - eslint规则
+
 	答：http://eslint.org/docs/rules/
 - 设备像素比
+
 	答：http://www.zhangxinxu.com/wordpress/2012/08/window-devicepixelratio/
 	
 - Flex弹性布局

@@ -12,8 +12,10 @@
 - 使用eslint进行js代码的规范、
 - 使用[better-scroll](https://github.com/ustbhuangyi/better-scroll)进行联动滑动
 
-## 功能包括
-- ......
+## 在线预览
+[点我在线预览](http://112.74.200.85:8889)
+
+**（PC端建议开启chrome调试模式食用更佳，移动端直接在浏览器开启即可）**
 
 ## Build Setup
 
@@ -24,7 +26,7 @@ $ git clone https://github.com/cccyb/vue-eleme-app.git
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:8888
+# serve with hot reload at localhost:8088
 $ npm run dev
 
 # build for production with minification

@@ -59,7 +59,7 @@
   </transition>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import BScroll from 'better-scroll';
   import Vue from 'vue';
   import {formatDate} from 'common/js/date';

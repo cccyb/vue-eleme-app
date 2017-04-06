@@ -51,6 +51,7 @@
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import food from 'components/food/food';
+  const response = require('../../common/data/goods.json');
 
   const ERR_OK = 0;
 
@@ -94,16 +95,24 @@
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 
-      this.$http.get('/api/goods').then((response) => {
-        response = response.body;
-        if (response.errno === ERR_OK) {
-          this.goods = response.data;
-          this.$nextTick(() => {
-            this._initScroll();
-            this._calculateHeight();
-          });
-        }
-      });
+      // this.$http.get('/api/goods').then((response) => {
+      //   response = response.body;
+      //   if (response.errno === ERR_OK) {
+      //     this.goods = response.data;
+      //     this.$nextTick(() => {
+      //       this._initScroll();
+      //       this._calculateHeight();
+      //     });
+      //   }
+      // });
+
+      if (response.errno === ERR_OK) {
+        this.goods = response.data;
+        this.$nextTick(() => {
+          this._initScroll();
+          this._calculateHeight();
+        });
+      }
     },
     methods: {
       selectMenu(index, event) {

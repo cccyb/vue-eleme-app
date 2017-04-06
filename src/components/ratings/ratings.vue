@@ -61,6 +61,7 @@
   import star from 'components/star/star';
   import ratingselect from 'components/ratingselect/ratingselect';
   import split from 'components/split/split';
+  const response = require('../../common/data/ratings.json');
 
   const ALL = 2;
   const ERR_OK = 0;
@@ -79,17 +80,26 @@
       };
     },
     created() {
-      this.$http.get('/api/ratings').then((response) => {
-        response = response.body;
-        if (response.errno === ERR_OK) {
-          this.ratings = response.data;
-          this.$nextTick(() => {
-            this.scroll = new BScroll(this.$refs.ratings, {
-              click: true
-            });
+      // this.$http.get('/api/ratings').then((response) => {
+      //   response = response.body;
+      //   if (response.errno === ERR_OK) {
+      //     this.ratings = response.data;
+      //     this.$nextTick(() => {
+      //       this.scroll = new BScroll(this.$refs.ratings, {
+      //         click: true
+      //       });
+      //     });
+      //   }
+      // });
+
+      if (response.errno === ERR_OK) {
+        this.ratings = response.data;
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.ratings, {
+            click: true
           });
-        }
-      });
+        });
+      }
     },
     methods: {
       needShow(type, text) {

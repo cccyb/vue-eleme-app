@@ -16,25 +16,25 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 
-var seller = require('../static/seller.json')
-var goods = require('../static/goods.json')
-var ratings = require('../static/ratings.json')
+// var seller = require('../static/seller.json')
+// var goods = require('../static/goods.json')
+// var ratings = require('../static/ratings.json')
 
-var apiRoutes = express.Router()
+// var apiRoutes = express.Router()
 
-apiRoutes.get('/seller', function (req, res) {
-  res.json(seller);
-})
+// apiRoutes.get('/seller', function (req, res) {
+//   res.json(seller);
+// })
 
-apiRoutes.get('/goods', function (req, res) {
-  res.json(goods);
-})
+// apiRoutes.get('/goods', function (req, res) {
+//   res.json(goods);
+// })
 
-apiRoutes.get('/ratings', function (req, res) {
-  res.json(ratings);
-})
+// apiRoutes.get('/ratings', function (req, res) {
+//   res.json(ratings);
+// })
 
-app.use('/api', apiRoutes)
+// app.use('/api', apiRoutes)
 
 var compiler = webpack(webpackConfig)
 
